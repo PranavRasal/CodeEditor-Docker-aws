@@ -62,16 +62,11 @@ useEffect(()=>{
 
   
   return()=>{
-    
     provider.disconnect();
-    
     window.removeEventListener("beforeunload", handleBeforeUnload);
   }
   }
-},[
-  userName ,
-  
-])
+},[userName ])
 
 if(!userName){
   return (
