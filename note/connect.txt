@@ -1,0 +1,7 @@
+1. fronted => terminal npm run bulid 
+2. give dist folder [1 folder and 2 files]
+3. go to backend create publice folder 
+4. and copy the dist folder to public
+
+- npm run bulid to wrap up the all the html , css , and javascript to dist folder 
+- every time any change in fronted file again to this process
