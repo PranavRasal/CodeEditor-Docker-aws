@@ -2,7 +2,7 @@ import axios from "axios";
 import {Languages} from "./constand"
 
 const API = axios.create({
-  baseURL: "http://emkc.org/api/v2/piston",
+  baseURL: "https://emkc.org/api/v2/piston",
 })
   
 
