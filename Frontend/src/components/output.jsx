@@ -25,7 +25,8 @@ function output({ editorRef , language}) {
          onClick={onRun}>
         Run</button></div>
         <div>
-
+            <textarea className='w-full h-[calc(100vh-100px)] bg-neutral-800 text-white p-4
+             resize-none focus:outline-none' readOnly value={"Output will be displayed here..."} /> 
         </div>
 
     </div>

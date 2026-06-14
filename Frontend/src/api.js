@@ -1,15 +1,15 @@
 import axios from "axios";
-import {Languages} from "./constand"
+import {languages} from "./constand"
 
 const API = axios.create({
-  baseURL: "https://emkc.org/api/v2/piston",
+  baseURL: "https://piston.readthedocs.io/en/latest/api-v2",
 })
   
 
 export const executeCode = async (code, language) => {
     const response = await API.post("/execute", {
         language: language,
-        version: Languages[language],
+        version: languages[language],
         files: [
             {
              
