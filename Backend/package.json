@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"Nothing to build - plain Node server\"",
     "dev": "npx nodemon server.js",
     "start": "node server.js"
   },
