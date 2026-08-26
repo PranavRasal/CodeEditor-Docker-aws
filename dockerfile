@@ -1,28 +1,32 @@
-#build the frontend dist folder
-#copy the dist folder content in backend /public folder
-
+# ---- Stage 1: build the frontend ----
 FROM node:20-alpine AS frontend_builder
 
-COPY ./Frontend /app 
-
 WORKDIR /app
 
-RUN npm install
+COPY ./Frontend/package.json ./Frontend/package-lock.json ./
+RUN npm ci
 
+COPY ./Frontend .
 RUN npm run build
 
-# build the backend folder
+# ---- Stage 2: production server ----
+FROM node:20-alpine
 
-FROM node:20-alpine 
-
-COPY ./Backend /app
-
+ENV NODE_ENV=production
 WORKDIR /app
 
-RUN npm install
+COPY ./Backend/package.json ./Backend/package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
 
-# copy the dist folder content from frontend builder to backend public folder
+COPY ./Backend .
 
 COPY --from=frontend_builder /app/dist /app/public
+
+USER node
+
+EXPOSE 3000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget -qO- http://127.0.0.1:${PORT:-3000}/health || exit 1
 
 CMD ["node", "server.js"]

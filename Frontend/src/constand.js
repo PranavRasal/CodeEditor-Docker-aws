@@ -5,6 +5,14 @@ export const languages = {
     "cpp" : "11.3.0"
 }
 
+// Judge0 language IDs (GET /api/languages lists all available)
+export const judge0LanguageIds = {
+    javascript: 63, // Node.js
+    python: 71,
+    java: 62,
+    cpp: 54,
+}
+
 export const snippets = {
   javascript: `console.log("Hello World");`,
 

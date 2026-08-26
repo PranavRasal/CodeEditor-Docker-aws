@@ -22,6 +22,9 @@ function App() {
   const [value , setValue] = useState("");
   const [language, setLanguage] = useState("javascript");
 
+  // Works on every device: same origin in production (docker), proxied in dev
+  const SERVER_URL = import.meta.env.VITE_SERVER_URL || window.location.origin;
+
   const onSelect = (lang) => {
     setLanguage(lang);
     setValue(snippets[lang] || "");
@@ -48,7 +51,7 @@ const handleMount = (editor)=>{
 useEffect(()=>{
     
   if( userName){
-     const provider = new SocketIOProvider("http://localhost:3000", "monaco", ydoc ,{
+     const provider = new SocketIOProvider(SERVER_URL, "monaco", ydoc ,{
       autoConnect : true
     });
 
@@ -75,17 +78,17 @@ useEffect(()=>{
     window.removeEventListener("beforeunload", handleBeforeUnload);
   }
   }
-},[userName ])
+},[userName , SERVER_URL])
 
 
-const handleSubmit = (e) =>{
+const handleSubmit = (e) =>{ // Handle the form submission
   e.preventDefault();
   setUserName(e.target.username.value);
   window.history.pushState({}, "","?username=" + e.target.username.value);
   
 }
 
-if(!userName){
+if(!userName){ // If the user has not entered a username, show the input form 
   return (
     <main className=" h-screen w-full bg-gray-900 flex items-center justify-center"> 
       <form 
@@ -123,11 +126,11 @@ if(!userName){
     </ul>
 
     </aside>
-
+    
     <section className = "w-3/4 bg-neutral-800 rounded-lg overflow-hidden">
     <LanguageSelector  language={language} onSelect={onSelect}/>
     <div className="h-[calc(100vh-200px)]">
-   <Editor
+   <Editor   
    height="70%"
    language={language}
    defaultLanguage={language}
