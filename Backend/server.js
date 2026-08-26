@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import {createServer} from 'http';
 import {Server} from 'socket.io';
 import { YSocketIO } from "y-socket.io/dist/server"
@@ -8,6 +9,7 @@ import { fileURLToPath } from 'url';
 const app = express();
 
 app.set('trust proxy', 1);
+app.use(cors());
 app.use(express.json({ limit: '1mb' }));
 
 const __filename = fileURLToPath(import.meta.url);
