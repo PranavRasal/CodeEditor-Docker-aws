@@ -1,10 +1,12 @@
 import axios from "axios";
 import { judge0LanguageIds } from "./constand"
 
-// In production the frontend is served by the backend (same origin).
-// In dev, vite proxy forwards /api to http://localhost:3000
+// Docker/served-by-backend: same origin ("/api"). Dev: vite proxy.
+// Separate hosting (Vercel): set VITE_SERVER_URL to the backend URL, e.g. https://api.example.com
+const BASE = import.meta.env.VITE_SERVER_URL || "";
+
 const API = axios.create({
-  baseURL: "/api",
+  baseURL: `${BASE}/api`,
 })
 
 export const executeCode = async (code, language, stdin = "") => {
